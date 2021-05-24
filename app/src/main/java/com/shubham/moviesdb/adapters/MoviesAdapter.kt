@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shubham.moviesdb.databinding.ItemMovieCardBinding
 import com.shubham.moviesdb.response.MovieResponse
-import com.shubham.moviesdb.utils.Constants.TMDB_BASE_URL
 
-class MoviesAdapter (private val moviesList: List<MovieResponse.Result>): RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+class MoviesAdapter (private val moviesList: List<MovieResponse.Result>, private val callback: MoviesAdapterCallback): RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieCardBinding
@@ -17,7 +16,8 @@ class MoviesAdapter (private val moviesList: List<MovieResponse.Result>): Recycl
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(moviesList[position])
+        holder.bind(moviesList[position],callback)
+
     }
 
     override fun getItemCount(): Int {
@@ -26,13 +26,21 @@ class MoviesAdapter (private val moviesList: List<MovieResponse.Result>): Recycl
     }
 
     class MovieViewHolder(private val binding: ItemMovieCardBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: MovieResponse.Result) {
+        fun bind(movie: MovieResponse.Result, callback: MoviesAdapterCallback) {
             Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w500" + data.posterPath)
+                .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .centerCrop()
                 .into(binding.moviePoster)
-            binding.movieTitle.text=data.title
+            binding.movieTitle.text=movie.title
+
+            binding.root.setOnClickListener {
+                callback.onMovieClicked(movie)
+            }
         }
 
     }
+}
+
+interface MoviesAdapterCallback{
+    fun onMovieClicked(movie: MovieResponse.Result)
 }

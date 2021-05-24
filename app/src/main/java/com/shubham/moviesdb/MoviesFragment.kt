@@ -7,13 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.shubham.moviesdb.adapters.MoviesAdapter
+import com.shubham.moviesdb.adapters.MoviesAdapterCallback
 import com.shubham.moviesdb.databinding.FragmentMoviesBinding
+import com.shubham.moviesdb.response.MovieResponse
+import com.shubham.moviesdb.utils.Constants.MOVIE_ID_KEY
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MoviesFragment : Fragment() {
+class MoviesFragment : Fragment() , MoviesAdapterCallback {
 
     private val viewModel: MoviesViewModel by viewModels()
     private lateinit var popularAdapter: MoviesAdapter
@@ -37,30 +41,36 @@ class MoviesFragment : Fragment() {
         viewModel.getPopularMovies()
         viewModel.getTopRatedMovies()
         viewModel.getNowPlayingMovies()
-
         initObservers()
-    }
 
+
+    }
     private fun initObservers() {
 
         viewModel.onPopularMoviesResponse.observe(viewLifecycleOwner,{
             Log.d("ferwerew","$it")
-            popularAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.results) }!!
+            popularAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.results,this) }!!
             binding.rvPopular.adapter=popularAdapter
         })
 
         viewModel.onTopRatedMoviesResponse.observe(viewLifecycleOwner,{
             Log.d("ferwerew###","$it")
-            topRatedAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.results) }!!
+            topRatedAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.results,this) }!!
             binding.rvTopRated.adapter=topRatedAdapter
         })
 
         viewModel.onNowPlayingMoviesResponse.observe(viewLifecycleOwner,{
             Log.d("ferwerasaSassew","$it")
-            nowPlayingAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.results) }!!
+            nowPlayingAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.results, this) }!!
             binding.rvNowPlaying.adapter=nowPlayingAdapter
         })
 
+    }
+
+    override fun onMovieClicked(movie: MovieResponse.Result) {
+        val bundle = Bundle()
+        bundle.putInt(MOVIE_ID_KEY, movie.id)
+       findNavController().navigate(R.id.movieDetailsFragment, bundle)
     }
 
 }

@@ -1,6 +1,8 @@
 package com.shubham.moviesdb.remote
 
+import com.shubham.moviesdb.response.MovieDetailsResponse
 import com.shubham.moviesdb.response.MovieResponse
+import com.shubham.moviesdb.utils.Constants.DEFAULT_QUERY
 import com.shubham.moviesdb.utils.Constants.TMDB_API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,4 +24,11 @@ interface MoviesApi {
         @Query("query") query: String,
         @Query("api_key") apiKey: String = TMDB_API_KEY
     ): Response<MovieResponse>
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+            @Path("movie_id") id: Int,
+            @Query("append_to_response") appendQuery: String = DEFAULT_QUERY,
+            @Query("api_key") apiKey: String = TMDB_API_KEY
+    ): Response<MovieDetailsResponse>
 }
