@@ -5,4 +5,5 @@
     <string name="movie_title">Movie title</string>
     <string name="similar">SIMILIAR</string>
     <string name="rating_ex">Rating</string>
+    <string name="trailers">Trailers</string>
 </resources>

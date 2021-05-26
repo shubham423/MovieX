@@ -1,6 +1,6 @@
 package com.shubham.moviesdb.remote
 
-import com.shubham.moviesdb.response.MovieDetailsResponse
+import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
 import com.shubham.moviesdb.utils.Constants.DEFAULT_QUERY
 import com.shubham.moviesdb.utils.Constants.TMDB_API_KEY
@@ -30,5 +30,5 @@ interface MoviesApi {
             @Path("movie_id") id: Int,
             @Query("append_to_response") appendQuery: String = DEFAULT_QUERY,
             @Query("api_key") apiKey: String = TMDB_API_KEY
-    ): Response<MovieDetailsResponse>
+    ): Response<Movie>
 }

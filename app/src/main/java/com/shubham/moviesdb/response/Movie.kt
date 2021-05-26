@@ -3,7 +3,7 @@ package com.shubham.moviesdb.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetailsResponse(
+data class Movie(
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")
@@ -53,7 +53,11 @@ data class MovieDetailsResponse(
     @SerializedName("vote_average")
     val voteAverage: Double?,
     @SerializedName("vote_count")
-    val voteCount: Int?
+    val voteCount: Int?,
+    @SerializedName("videos")
+    val videos: VideosResponse?,
+
+
 ) {
     data class Genre(
         @SerializedName("id")

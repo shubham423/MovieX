@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubham.moviesdb.remote.MoviesRepository
-import com.shubham.moviesdb.response.MovieDetailsResponse
+import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,8 +27,8 @@ class MoviesViewModel @Inject constructor(
     private val _onNowPlayingMoviesResponse = MutableLiveData<Response<MovieResponse>>()
     val onNowPlayingMoviesResponse: LiveData<Response<MovieResponse>> = _onNowPlayingMoviesResponse
 
-    private val _onMoviesDetailsResponse = MutableLiveData<Response<MovieDetailsResponse>>()
-    val onMoviesDetailsResponse: LiveData<Response<MovieDetailsResponse>> = _onMoviesDetailsResponse
+    private val _onMoviesDetailsResponse = MutableLiveData<Response<Movie>>()
+    val onMoviesDetailsResponse: LiveData<Response<Movie>> = _onMoviesDetailsResponse
 
     fun getPopularMovies() {
         viewModelScope.launch {

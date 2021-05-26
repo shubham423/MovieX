@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shubham.moviesdb.databinding.ItemMovieCardBinding
+import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
 
-class MoviesAdapter (private val moviesList: List<MovieResponse.Result>, private val callback: MoviesAdapterCallback): RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+class MoviesAdapter (private val moviesList: List<Movie>, private val callback: MoviesAdapterCallback): RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieCardBinding
@@ -26,7 +27,7 @@ class MoviesAdapter (private val moviesList: List<MovieResponse.Result>, private
     }
 
     class MovieViewHolder(private val binding: ItemMovieCardBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieResponse.Result, callback: MoviesAdapterCallback) {
+        fun bind(movie: Movie, callback: MoviesAdapterCallback) {
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .centerCrop()
@@ -42,5 +43,5 @@ class MoviesAdapter (private val moviesList: List<MovieResponse.Result>, private
 }
 
 interface MoviesAdapterCallback{
-    fun onMovieClicked(movie: MovieResponse.Result)
+    fun onMovieClicked(movie: Movie)
 }
