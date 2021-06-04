@@ -15,9 +15,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.shubham.moviesdb.adapters.CastAdapter
+import com.shubham.moviesdb.adapters.SimilarMoviesAdapter
 import com.shubham.moviesdb.databinding.FragmentMovieDetailsBinding
 import com.shubham.moviesdb.response.Cast
 import com.shubham.moviesdb.response.Movie
+import com.shubham.moviesdb.response.SimilarMovie
 import com.shubham.moviesdb.response.VideosResponse
 import com.shubham.moviesdb.utils.Constants.MOVIE_ID_KEY
 import com.shubham.moviesdb.utils.Constants.YOUTUBE_THUMBNAIL_URL
@@ -32,6 +34,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var binding: FragmentMovieDetailsBinding
     private val viewModel: MoviesViewModel by viewModels()
     private lateinit var castAdapter: CastAdapter
+    private lateinit var similarMoviesAdapter: SimilarMoviesAdapter
 
 
     override fun onCreateView(
@@ -51,6 +54,7 @@ class MovieDetailsFragment : Fragment() {
 
         viewModel.getMovieById(id)
         viewModel.getCastCredits(id)
+        viewModel.getSimilarMovies(id)
         initObservers()
     }
 
@@ -65,8 +69,17 @@ class MovieDetailsFragment : Fragment() {
                 setCastRv(it.body()?.cast)
             }
 
+            viewModel.onSimilarMoviesResponse.observe(viewLifecycleOwner){
+                setSimilarRv(it.body()?.results)
+            }
         })
 
+    }
+
+    private fun setSimilarRv(results: List<SimilarMovie?>?) {
+        similarMoviesAdapter= SimilarMoviesAdapter()
+        similarMoviesAdapter.setData(results as List<SimilarMovie>)
+        binding.similarRv.adapter=similarMoviesAdapter
     }
 
     private fun setCastRv(cast: List<Cast?>?) {

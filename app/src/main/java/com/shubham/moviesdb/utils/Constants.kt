@@ -7,4 +7,5 @@ object Constants {
     const val DEFAULT_QUERY="images,videos"
     const val YOUTUBE_VIDEO_URL = "https://m.youtube.com/watch?v=%s"
     const val YOUTUBE_THUMBNAIL_URL = "https://img.youtube.com/vi/%s/0.jpg"
+    const val TMDB_IMAGE_BASE_URL="https://image.tmdb.org/t/p/w500"
 }

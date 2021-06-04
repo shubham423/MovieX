@@ -8,6 +8,7 @@ import com.shubham.moviesdb.remote.MoviesRepository
 import com.shubham.moviesdb.response.CastCreditsResponse
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
+import com.shubham.moviesdb.response.SimiliarMoviesResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -33,6 +34,9 @@ class MoviesViewModel @Inject constructor(
 
     private val _onCastCreditsResponse = MutableLiveData<Response<CastCreditsResponse>>()
     val onCastCreditsResponse: LiveData<Response<CastCreditsResponse>> = _onCastCreditsResponse
+
+    private val _onSimilarMoviesResponse = MutableLiveData<Response<SimiliarMoviesResponse>>()
+    val onSimilarMoviesResponse: LiveData<Response<SimiliarMoviesResponse>> = _onSimilarMoviesResponse
 
     fun getPopularMovies() {
         viewModelScope.launch {
@@ -73,6 +77,15 @@ class MoviesViewModel @Inject constructor(
             _onCastCreditsResponse.postValue(response)
         }
     }
+
+    fun getSimilarMovies(id : Int) {
+        viewModelScope.launch {
+            // Coroutine that will be canceled when the ViewModel is cleared.
+            val response = repository.getSimilarMovies(id)
+            _onSimilarMoviesResponse.postValue(response)
+        }
+    }
+
 
 
 
