@@ -1,5 +1,6 @@
 package com.shubham.moviesdb.remote
 
+import com.shubham.moviesdb.response.CastCreditsResponse
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
 import com.shubham.moviesdb.utils.Constants.DEFAULT_QUERY
@@ -31,4 +32,11 @@ interface MoviesApi {
             @Query("append_to_response") appendQuery: String = DEFAULT_QUERY,
             @Query("api_key") apiKey: String = TMDB_API_KEY
     ): Response<Movie>
+
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredits(
+        @Path("movie_id") movie_id: Int,
+        @Query ("api_key") apiKey : String = TMDB_API_KEY
+    ): Response<CastCreditsResponse>
 }

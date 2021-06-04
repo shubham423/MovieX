@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubham.moviesdb.remote.MoviesRepository
+import com.shubham.moviesdb.response.CastCreditsResponse
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +30,9 @@ class MoviesViewModel @Inject constructor(
 
     private val _onMoviesDetailsResponse = MutableLiveData<Response<Movie>>()
     val onMoviesDetailsResponse: LiveData<Response<Movie>> = _onMoviesDetailsResponse
+
+    private val _onCastCreditsResponse = MutableLiveData<Response<CastCreditsResponse>>()
+    val onCastCreditsResponse: LiveData<Response<CastCreditsResponse>> = _onCastCreditsResponse
 
     fun getPopularMovies() {
         viewModelScope.launch {
@@ -59,6 +63,14 @@ class MoviesViewModel @Inject constructor(
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesById(id)
             _onMoviesDetailsResponse.postValue(response)
+        }
+    }
+
+    fun getCastCredits(id : Int) {
+        viewModelScope.launch {
+            // Coroutine that will be canceled when the ViewModel is cleared.
+            val response = repository.getMoviesCredits(id)
+            _onCastCreditsResponse.postValue(response)
         }
     }
 

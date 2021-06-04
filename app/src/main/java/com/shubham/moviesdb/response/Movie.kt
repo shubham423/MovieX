@@ -57,8 +57,10 @@ data class Movie(
     @SerializedName("videos")
     val videos: VideosResponse?,
 
+    @SerializedName("similar")
+    var similar: SimilarResponse? ,
 
-) {
+    ) {
     data class Genre(
         @SerializedName("id")
         val id: Int?,
@@ -93,3 +95,4 @@ data class Movie(
         val name: String?
     )
 }
+

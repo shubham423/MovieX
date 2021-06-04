@@ -14,7 +14,9 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.shubham.moviesdb.adapters.CastAdapter
 import com.shubham.moviesdb.databinding.FragmentMovieDetailsBinding
+import com.shubham.moviesdb.response.Cast
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.VideosResponse
 import com.shubham.moviesdb.utils.Constants.MOVIE_ID_KEY
@@ -23,18 +25,19 @@ import com.shubham.moviesdb.utils.Constants.YOUTUBE_VIDEO_URL
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Response
-import java.util.*
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
     private val viewModel: MoviesViewModel by viewModels()
+    private lateinit var castAdapter: CastAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentMovieDetailsBinding.inflate(layoutInflater)
         return binding.root
@@ -47,17 +50,32 @@ class MovieDetailsFragment : Fragment() {
         Log.d("MoviesDetails", "id is $id")
 
         viewModel.getMovieById(id)
+        viewModel.getCastCredits(id)
         initObservers()
     }
 
     private fun initObservers() {
-        viewModel.onMoviesDetailsResponse.observe(viewLifecycleOwner, {
-            setMovieDetails(it)
+        viewModel.onMoviesDetailsResponse.observe(viewLifecycleOwner, { movie ->
+            setMovieDetails(movie)
             showTrailers(
-                it.body()?.videos
+                movie.body()?.videos
             )
+
+            viewModel.onCastCreditsResponse.observe(viewLifecycleOwner){
+                setCastRv(it.body()?.cast)
+            }
+
         })
 
+    }
+
+    private fun setCastRv(cast: List<Cast?>?) {
+        Log.d("details","cast list is $cast")
+        castAdapter= CastAdapter()
+        if (cast != null) {
+            castAdapter.setData(cast as List<Cast>)
+        }
+        binding.castRv.adapter=castAdapter
     }
 
     private fun showTrailers(videosResponse: VideosResponse?) {

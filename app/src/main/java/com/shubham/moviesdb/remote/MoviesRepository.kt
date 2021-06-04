@@ -1,5 +1,6 @@
 package com.shubham.moviesdb.remote
 
+import com.shubham.moviesdb.response.CastCreditsResponse
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.MovieResponse
 import retrofit2.Response
@@ -12,5 +13,9 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi) {
     }
     suspend fun getMoviesById(id: Int): Response<Movie>{
         return api.getMovieDetails(id)
+    }
+
+    suspend fun getMoviesCredits(id: Int): Response<CastCreditsResponse>{
+        return api.getMovieCredits(id)
     }
 }
