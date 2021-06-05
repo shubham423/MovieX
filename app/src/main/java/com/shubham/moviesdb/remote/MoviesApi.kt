@@ -1,9 +1,6 @@
 package com.shubham.moviesdb.remote
 
-import com.shubham.moviesdb.response.CastCreditsResponse
-import com.shubham.moviesdb.response.Movie
-import com.shubham.moviesdb.response.MovieResponse
-import com.shubham.moviesdb.response.SimiliarMoviesResponse
+import com.shubham.moviesdb.response.*
 import com.shubham.moviesdb.utils.Constants.DEFAULT_QUERY
 import com.shubham.moviesdb.utils.Constants.TMDB_API_KEY
 import retrofit2.Response
@@ -46,4 +43,11 @@ interface MoviesApi {
         @Path("movie_id") movie_id: Int,
         @Query ("api_key") apiKey : String = TMDB_API_KEY
     ): Response<SimiliarMoviesResponse>
+
+
+    @GET("person/{person_id}")
+    suspend fun getActor(
+        @Path("person_id") person_id: Int,
+        @Query ("api_key") apiKey : String = TMDB_API_KEY
+    ): Response<ActorResponse>
 }

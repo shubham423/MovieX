@@ -4,13 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
-import com.shubham.moviesdb.databinding.ItemCastBinding
 import com.shubham.moviesdb.databinding.ItemSimilarBinding
 import com.shubham.moviesdb.response.SimilarMovie
 import com.shubham.moviesdb.utils.Constants.TMDB_IMAGE_BASE_URL
 
-class SimilarMoviesAdapter: RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder>() {
+class SimilarMoviesAdapter(private val callback: SimilarAdapterCallback): RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder>() {
 
     private var moviesList: List<SimilarMovie>?=null
 
@@ -21,7 +19,7 @@ class SimilarMoviesAdapter: RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        moviesList?.get(position)?.let { holder.bind(it) }
+        moviesList?.get(position)?.let { holder.bind(it,callback) }
     }
 
     override fun getItemCount(): Int {
@@ -39,14 +37,22 @@ class SimilarMoviesAdapter: RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder
 
 
     class ViewHolder(private val binding: ItemSimilarBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(similar: SimilarMovie) {
+        fun bind(similar: SimilarMovie, callback: SimilarAdapterCallback) {
                 binding.titleSimilar.text = similar.title
                 binding.ratingSimilar.text = similar.voteAverage.toString()
             Glide.with(itemView)
                 .load(TMDB_IMAGE_BASE_URL + similar.posterPath)
                 .centerCrop()
                 .into(binding.posterSimilar)
+
+            binding.posterSimilar.setOnClickListener {
+                similar.id?.let { it1 -> callback.onMovieClicked(it1) }
+            }
         }
 
     }
+}
+
+interface SimilarAdapterCallback{
+    fun onMovieClicked(movieId: Int)
 }

@@ -1,9 +1,6 @@
 package com.shubham.moviesdb.remote
 
-import com.shubham.moviesdb.response.CastCreditsResponse
-import com.shubham.moviesdb.response.Movie
-import com.shubham.moviesdb.response.MovieResponse
-import com.shubham.moviesdb.response.SimiliarMoviesResponse
+import com.shubham.moviesdb.response.*
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -22,5 +19,9 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi) {
 
     suspend fun getSimilarMovies(id: Int): Response<SimiliarMoviesResponse>{
         return api.getSimilarMovies(id)
+    }
+
+    suspend fun getActor(castId: Int): Response<ActorResponse>{
+        return api.getActor(castId)
     }
 }

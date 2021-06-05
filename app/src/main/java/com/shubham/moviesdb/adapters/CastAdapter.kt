@@ -1,5 +1,6 @@
 package com.shubham.moviesdb.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.shubham.moviesdb.databinding.ItemCastBinding
 import com.shubham.moviesdb.response.Cast
 
-class CastAdapter: RecyclerView.Adapter<CastAdapter.ViewHolder>() {
+class CastAdapter(private val callback:CastAdapterCallback) : RecyclerView.Adapter<CastAdapter.ViewHolder>() {
 
-    private var castList: List<Cast>?=null
+    private var castList: List<Cast>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCastBinding
@@ -18,32 +19,40 @@ class CastAdapter: RecyclerView.Adapter<CastAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(castList?.get(position))
+        holder.bind(castList?.get(position),callback)
     }
 
     override fun getItemCount(): Int {
-        if (castList!=null){
+        if (castList != null) {
             return castList!!.size
-        }else{
+        } else {
             return 0
         }
 
     }
 
-    fun setData(castList: List<Cast>){
-        this.castList=castList
+    fun setData(castList: List<Cast>) {
+        this.castList = castList
     }
 
 
-    class ViewHolder(private val binding: ItemCastBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(cast: Cast?) {
+    class ViewHolder(private val binding: ItemCastBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(cast: Cast?, callback: CastAdapterCallback) {
             binding.castName.text = cast?.name
             binding.castCharacter.text = cast?.character
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w500" + cast?.profilePath)
                 .override(120, 120)
                 .into(binding.castPhoto)
+            binding.root.setOnClickListener {
+                cast?.castId?.let { callback.onCastClicked(it) }
+                Log.d("castadapter","${cast?.castId}")
+            }
+
         }
 
     }
+}
+interface CastAdapterCallback{
+    fun onCastClicked(castId: Int)
 }

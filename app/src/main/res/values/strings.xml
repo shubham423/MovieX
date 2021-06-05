@@ -6,4 +6,8 @@
     <string name="similar">SIMILIAR</string>
     <string name="rating_ex">Rating</string>
     <string name="trailers">Trailers</string>
+    <string name="actor_name">Name</string>
+    <string name="known_for">Known for</string>
+    <string name="popular">popular</string>
+    <string name="birthday">Birthday</string>
 </resources>

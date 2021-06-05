@@ -1,4 +1,4 @@
-package com.shubham.moviesdb
+package com.shubham.moviesdb.ui.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -11,25 +11,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.CastAdapter
+import com.shubham.moviesdb.adapters.CastAdapterCallback
+import com.shubham.moviesdb.adapters.SimilarAdapterCallback
 import com.shubham.moviesdb.adapters.SimilarMoviesAdapter
 import com.shubham.moviesdb.databinding.FragmentMovieDetailsBinding
 import com.shubham.moviesdb.response.Cast
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.SimilarMovie
 import com.shubham.moviesdb.response.VideosResponse
-import com.shubham.moviesdb.utils.Constants.MOVIE_ID_KEY
-import com.shubham.moviesdb.utils.Constants.YOUTUBE_THUMBNAIL_URL
-import com.shubham.moviesdb.utils.Constants.YOUTUBE_VIDEO_URL
+import com.shubham.moviesdb.utils.Constants
+import com.shubham.moviesdb.utils.Constants.CAST_ID_KEY
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Response
 
 @AndroidEntryPoint
-class MovieDetailsFragment : Fragment() {
+class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallback {
 
     private lateinit var binding: FragmentMovieDetailsBinding
     private val viewModel: MoviesViewModel by viewModels()
@@ -49,7 +52,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = requireArguments().getInt(MOVIE_ID_KEY, 0)
+        val id = requireArguments().getInt(Constants.MOVIE_ID_KEY, 0)
         Log.d("MoviesDetails", "id is $id")
 
         viewModel.getMovieById(id)
@@ -65,11 +68,11 @@ class MovieDetailsFragment : Fragment() {
                 movie.body()?.videos
             )
 
-            viewModel.onCastCreditsResponse.observe(viewLifecycleOwner){
+            viewModel.onCastCreditsResponse.observe(viewLifecycleOwner) {
                 setCastRv(it.body()?.cast)
             }
 
-            viewModel.onSimilarMoviesResponse.observe(viewLifecycleOwner){
+            viewModel.onSimilarMoviesResponse.observe(viewLifecycleOwner) {
                 setSimilarRv(it.body()?.results)
             }
         })
@@ -77,18 +80,18 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setSimilarRv(results: List<SimilarMovie?>?) {
-        similarMoviesAdapter= SimilarMoviesAdapter()
+        similarMoviesAdapter = SimilarMoviesAdapter(this)
         similarMoviesAdapter.setData(results as List<SimilarMovie>)
-        binding.similarRv.adapter=similarMoviesAdapter
+        binding.similarRv.adapter = similarMoviesAdapter
     }
 
     private fun setCastRv(cast: List<Cast?>?) {
-        Log.d("details","cast list is $cast")
-        castAdapter= CastAdapter()
+        Log.d("details", "cast list is $cast")
+        castAdapter = CastAdapter(this)
         if (cast != null) {
             castAdapter.setData(cast as List<Cast>)
         }
-        binding.castRv.adapter=castAdapter
+        binding.castRv.adapter = castAdapter
     }
 
     private fun showTrailers(videosResponse: VideosResponse?) {
@@ -111,7 +114,7 @@ class MovieDetailsFragment : Fragment() {
                         parent.findViewById<TextView>(R.id.trailerTitle)
                     movieTrailerTitle.text = name
                     Glide.with(this)
-                        .load(String.format(YOUTUBE_THUMBNAIL_URL, key))
+                        .load(String.format(Constants.YOUTUBE_THUMBNAIL_URL, key))
                         .apply(RequestOptions.placeholderOf(R.color.violet).centerCrop())
                         .into(thumbnailTrailer)
                     thumbnailTrailer.requestLayout()
@@ -119,7 +122,7 @@ class MovieDetailsFragment : Fragment() {
                         startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(String.format(YOUTUBE_VIDEO_URL, key))
+                                Uri.parse(String.format(Constants.YOUTUBE_VIDEO_URL, key))
                             )
                         )
                     }
@@ -137,7 +140,6 @@ class MovieDetailsFragment : Fragment() {
         binding.movieDetailsTitle.text = response?.body()?.title ?: ""
         binding.movieDetailsOverview.text = response?.body()?.overview ?: ""
         binding.movieDetailsDuration.text = response?.body()?.runtime.toString()
-        binding.movieDetailsGenres.text = response?.body()?.genres?.get(0).toString() ?: ""
         binding.movieDetailsReleaseDate.text = response?.body()?.releaseDate ?: ""
 
         Glide.with(this)
@@ -145,6 +147,19 @@ class MovieDetailsFragment : Fragment() {
             .transition(DrawableTransitionOptions.withCrossFade())
             .centerCrop()
             .into(binding.movieDetailsPoster)
+    }
+
+    override fun onMovieClicked(movieId: Int) {
+        val bundle = Bundle()
+        movieId.let { bundle.putInt(Constants.MOVIE_ID_KEY, it) }
+        findNavController().navigate(R.id.action_movieDetailsFragment_self, bundle)
+    }
+
+    override fun onCastClicked(castId: Int) {
+        Log.d("Movuedetails", "cast id is $id")
+        val bundle = Bundle()
+        bundle.putInt(CAST_ID_KEY,castId)
+        findNavController().navigate(R.id.action_movieDetailsFragment_to_actorDetailsFragment, bundle)
     }
 
 

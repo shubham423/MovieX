@@ -1,19 +1,19 @@
-package com.shubham.moviesdb
+package com.shubham.moviesdb.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.MoviesAdapter
 import com.shubham.moviesdb.adapters.MoviesAdapterCallback
 import com.shubham.moviesdb.databinding.FragmentMoviesBinding
 import com.shubham.moviesdb.response.Movie
-import com.shubham.moviesdb.response.MovieResponse
-import com.shubham.moviesdb.utils.Constants.MOVIE_ID_KEY
+import com.shubham.moviesdb.utils.Constants
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,19 +49,19 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
     private fun initObservers() {
 
         viewModel.onPopularMoviesResponse.observe(viewLifecycleOwner,{
-            Log.d("ferwerew","$it")
-            popularAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies,this) }!!
+            Log.d("ferwerew", "$it")
+            popularAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvPopular.adapter=popularAdapter
         })
 
         viewModel.onTopRatedMoviesResponse.observe(viewLifecycleOwner,{
-            Log.d("ferwerew###","$it")
-            topRatedAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies,this) }!!
+            Log.d("ferwerew###", "$it")
+            topRatedAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvTopRated.adapter=topRatedAdapter
         })
 
         viewModel.onNowPlayingMoviesResponse.observe(viewLifecycleOwner,{
-            Log.d("ferwerasaSassew","$it")
+            Log.d("ferwerasaSassew", "$it")
             nowPlayingAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvNowPlaying.adapter=nowPlayingAdapter
         })
@@ -70,7 +70,7 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
 
     override fun onMovieClicked(movie: Movie) {
         val bundle = Bundle()
-        movie.id?.let { bundle.putInt(MOVIE_ID_KEY, it) }
+        movie.id?.let { bundle.putInt(Constants.MOVIE_ID_KEY, it) }
        findNavController().navigate(R.id.movieDetailsFragment, bundle)
     }
 
