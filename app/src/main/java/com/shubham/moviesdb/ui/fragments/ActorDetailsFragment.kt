@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import coil.load
 import com.bumptech.glide.Glide
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.databinding.FragmentActorDetailsBinding
@@ -41,8 +42,7 @@ class ActorDetailsFragment : Fragment() {
     private fun initObservers() {
         viewModel.onCastDetailsResponse.observe(viewLifecycleOwner){
             binding.textActorName.text = it.body()?.name
-            Glide.with(this)
-                .load("https://image.tmdb.org/t/p/original"+ it.body()?.profilePath)
+            binding.actorImage.load("https://image.tmdb.org/t/p/original" + it.body()?.profilePath)
 
             binding.textBio.text = it.body()?.biography
 

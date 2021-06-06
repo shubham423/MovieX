@@ -45,7 +45,7 @@ class CastAdapter(private val callback:CastAdapterCallback) : RecyclerView.Adapt
                 .override(120, 120)
                 .into(binding.castPhoto)
             binding.root.setOnClickListener {
-                cast?.castId?.let { callback.onCastClicked(it) }
+                cast?.id?.let { callback.onCastClicked(it) }
                 Log.d("castadapter","${cast?.castId}")
             }
 
