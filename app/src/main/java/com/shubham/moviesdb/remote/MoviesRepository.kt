@@ -24,4 +24,8 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi) {
     suspend fun getActor(castId: Int): Response<ActorResponse>{
         return api.getActor(castId)
     }
+
+    suspend fun searchMovie(query: String): Response<MovieResponse>{
+        return api.searchMovies(query)
+    }
 }

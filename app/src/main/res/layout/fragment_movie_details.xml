@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.MovieDetailsFragment"
-    android:background="@color/violet"
+    android:background="@color/black_transp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout

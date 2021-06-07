@@ -50,4 +50,6 @@ interface MoviesApi {
         @Path("person_id") person_id: Int,
         @Query ("api_key") apiKey : String = TMDB_API_KEY
     ): Response<ActorResponse>
+
+
 }

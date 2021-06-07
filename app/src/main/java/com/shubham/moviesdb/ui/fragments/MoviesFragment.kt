@@ -43,9 +43,16 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
         viewModel.getTopRatedMovies()
         viewModel.getNowPlayingMovies()
         initObservers()
-
+        initClickListeners()
 
     }
+
+    private fun initClickListeners() {
+        binding.homeSearchButton.setOnClickListener {
+            findNavController().navigate(R.id.action_moviesFragment_to_searchFragment)
+        }
+    }
+
     private fun initObservers() {
 
         viewModel.onPopularMoviesResponse.observe(viewLifecycleOwner,{

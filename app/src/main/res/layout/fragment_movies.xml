@@ -8,40 +8,70 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/violet"
+        android:background="@color/black_transp"
         tools:context=".fragments.MoviesFragment">
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:paddingStart="16dp"
-            android:drawablePadding="24dp"
-            android:hint="Search Your movie"
-            android:textColorHint="@color/white"
-            android:paddingVertical="4dp"
-            android:drawableStart="@drawable/ic_search"
-            android:background="@drawable/bg_search"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="#303030"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MovieX"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/home_search_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/bookmarks"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/bookmarks"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_bookmarks"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="48dp"
             android:text="Popular"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_popular"

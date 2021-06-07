@@ -115,7 +115,7 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
                     movieTrailerTitle.text = name
                     Glide.with(this)
                         .load(String.format(Constants.YOUTUBE_THUMBNAIL_URL, key))
-                        .apply(RequestOptions.placeholderOf(R.color.violet).centerCrop())
+                        .apply(RequestOptions.placeholderOf(R.color.black_transp).centerCrop())
                         .into(thumbnailTrailer)
                     thumbnailTrailer.requestLayout()
                     thumbnailTrailer.setOnClickListener {

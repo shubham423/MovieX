@@ -32,7 +32,7 @@
             android:layout_width="50dp"
             android:layout_height="25dp"
             android:alpha="0.2"
-            android:src="@color/violet"
+            android:src="@color/black_transp"
             app:layout_constraintBottom_toBottomOf="@+id/rating_similar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/rating_similar" />

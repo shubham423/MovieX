@@ -38,6 +38,9 @@ class MoviesViewModel @Inject constructor(
     private val _onCastDetailsResponse = MutableLiveData<Response<ActorResponse>>()
     val onCastDetailsResponse: LiveData<Response<ActorResponse>> = _onCastDetailsResponse
 
+    private val _onSearchMoviesResponse = MutableLiveData<Response<MovieResponse>>()
+    val onSearchMoviesResponse: LiveData<Response<MovieResponse>> = _onSearchMoviesResponse
+
     fun getPopularMovies() {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
@@ -93,5 +96,11 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-
+    fun searchMovie(query: String) {
+        viewModelScope.launch {
+            // Coroutine that will be canceled when the ViewModel is cleared.
+            val response = repository.searchMovie(query)
+            _onSearchMoviesResponse.postValue(response)
+        }
+    }
 }
