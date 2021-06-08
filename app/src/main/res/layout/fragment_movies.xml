@@ -135,5 +135,6 @@
             app:layout_constraintTop_toBottomOf="@+id/now_playing_tv"
             tools:listitem="@layout/item_movie_card" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

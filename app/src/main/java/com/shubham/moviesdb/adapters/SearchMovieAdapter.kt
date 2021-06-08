@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shubham.moviesdb.databinding.ItemMovieSearchBinding
-import com.shubham.moviesdb.databinding.ItemSearchBinding
 import com.shubham.moviesdb.response.Movie
 
 class SearchMovieAdapter (val callback: SearchMovieAdapterCallback): RecyclerView.Adapter<SearchMovieAdapter.MovieViewHolder>() {

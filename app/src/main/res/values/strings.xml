@@ -10,4 +10,6 @@
     <string name="known_for">Known for</string>
     <string name="popular">popular</string>
     <string name="birthday">Birthday</string>
+    <string name="movies">Movies</string>
+    <string name="tvshows">Tv Shows</string>
 </resources>
