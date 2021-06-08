@@ -4,12 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.shubham.moviesdb.databinding.ItemMovieCardBinding
 import com.shubham.moviesdb.databinding.ItemSearchBinding
 import com.shubham.moviesdb.response.Movie
-import com.shubham.moviesdb.response.MovieResponse
 
-class SearchMovieAdapter (): RecyclerView.Adapter<SearchMovieAdapter.MovieViewHolder>() {
+class SearchMovieAdapter (val callback: SearchMovieAdapterCallback): RecyclerView.Adapter<SearchMovieAdapter.MovieViewHolder>() {
 
 
      private var moviesList: List<Movie>?=null
@@ -24,7 +22,7 @@ class SearchMovieAdapter (): RecyclerView.Adapter<SearchMovieAdapter.MovieViewHo
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        moviesList?.get(position)?.let { holder.bind(it) }
+        moviesList?.get(position)?.let { holder.bind(it,callback) }
 
     }
 
@@ -34,17 +32,21 @@ class SearchMovieAdapter (): RecyclerView.Adapter<SearchMovieAdapter.MovieViewHo
     }
 
     class MovieViewHolder(private val binding: ItemSearchBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie) {
+        fun bind(movie: Movie, callback: SearchMovieAdapterCallback) {
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .centerCrop()
                 .into(binding.searchImage)
 
             binding.root.setOnClickListener {
-               //todo
+                movie.id?.let { it1 -> callback.onMovieClicked(it1) }
             }
         }
 
     }
+}
+
+interface SearchMovieAdapterCallback{
+    fun onMovieClicked(id : Int)
 }
 

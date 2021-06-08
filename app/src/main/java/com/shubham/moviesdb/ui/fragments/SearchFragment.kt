@@ -10,14 +10,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.SearchMovieAdapter
+import com.shubham.moviesdb.adapters.SearchMovieAdapterCallback
 import com.shubham.moviesdb.databinding.FragmentSearchBinding
+import com.shubham.moviesdb.utils.Constants
+import com.shubham.moviesdb.utils.Constants.MOVIE_ID_KEY
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(),SearchMovieAdapterCallback {
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchMovieAdapter: SearchMovieAdapter
@@ -69,7 +73,7 @@ class SearchFragment : Fragment() {
     private fun initObservers() {
         viewModel.onSearchMoviesResponse.observe(viewLifecycleOwner){
             if (it!=null){
-                searchMovieAdapter= SearchMovieAdapter()
+                searchMovieAdapter= SearchMovieAdapter(this)
                 it.body()?.let { it1 -> searchMovieAdapter.setData(it1.movies) }
                 binding.searchRecyclerView.adapter=searchMovieAdapter
             }
@@ -80,5 +84,10 @@ class SearchFragment : Fragment() {
         if (!binding.searchEditText.text.isNullOrEmpty())
             viewModel.searchMovie(binding.searchEditText.text.toString())
     }
-}
 
+    override fun onMovieClicked(id: Int) {
+        val bundle = Bundle()
+        bundle.putInt(MOVIE_ID_KEY,id)
+        findNavController().navigate(R.id.movieDetailsFragment, bundle)
+    }
+}

@@ -36,5 +36,9 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.shubham.moviesdb.ui.fragments.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 </navigation>
