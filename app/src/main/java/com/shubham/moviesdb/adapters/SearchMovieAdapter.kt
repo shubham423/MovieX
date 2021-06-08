@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.shubham.moviesdb.databinding.ItemMovieSearchBinding
 import com.shubham.moviesdb.databinding.ItemSearchBinding
 import com.shubham.moviesdb.response.Movie
 
@@ -16,7 +17,7 @@ class SearchMovieAdapter (val callback: SearchMovieAdapterCallback): RecyclerVie
         moviesList=movies
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val binding = ItemSearchBinding
+        val binding = ItemMovieSearchBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(binding)
     }
@@ -31,13 +32,16 @@ class SearchMovieAdapter (val callback: SearchMovieAdapterCallback): RecyclerVie
         return moviesList!!.size
     }
 
-    class MovieViewHolder(private val binding: ItemSearchBinding): RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(private val binding: ItemMovieSearchBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie, callback: SearchMovieAdapterCallback) {
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .centerCrop()
-                .into(binding.searchImage)
+                .into(binding.moviePoster)
 
+            binding.movieRating.text= movie.voteAverage.toString()
+            binding.movieTitle.text=movie.title
+            binding.movieOverview.text=movie.overview
             binding.root.setOnClickListener {
                 movie.id?.let { it1 -> callback.onMovieClicked(it1) }
             }
