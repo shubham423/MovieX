@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shubham.moviesdb.databinding.ItemMovieCardBinding
 import com.shubham.moviesdb.response.Movie
+import com.shubham.moviesdb.response.TvShow
+import dagger.hilt.android.AndroidEntryPoint
 
-class MoviesAdapter (private val moviesList: List<Movie>, private val callback: MoviesAdapterCallback): RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+
+class TvShowsAdapter (private val tvShowsList: List<TvShow>, private val callback: TvShowsAdapterCallback): RecyclerView.Adapter<TvShowsAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieCardBinding
@@ -16,31 +19,30 @@ class MoviesAdapter (private val moviesList: List<Movie>, private val callback: 
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(moviesList[position],callback)
+        holder.bind(tvShowsList[position],callback)
 
     }
 
     override fun getItemCount(): Int {
 
-        return moviesList.size
+        return tvShowsList.size
     }
 
     class MovieViewHolder(private val binding: ItemMovieCardBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie, callback: MoviesAdapterCallback) {
+        fun bind(tvShow: TvShow, callback: TvShowsAdapterCallback) {
             Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
+                .load("https://image.tmdb.org/t/p/w500" +tvShow.posterPath)
                 .centerCrop()
                 .into(binding.moviePoster)
-            binding.movieTitle.text=movie.title
-
+            binding.movieTitle.text=tvShow.name
             binding.root.setOnClickListener {
-                callback.onMovieClicked(movie)
+                callback.onMovieClicked(tvShow)
             }
         }
 
     }
 }
 
-interface MoviesAdapterCallback{
-    fun onMovieClicked(movie: Movie)
+interface TvShowsAdapterCallback{
+    fun onMovieClicked(tvShow: TvShow)
 }

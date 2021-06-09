@@ -21,15 +21,38 @@ class TvShowsViewModel @Inject constructor(
     private val _onPopularTvShowsResponse = MutableLiveData<Response<TvShowResponse>>()
     val onPopularTvShowsResponse: LiveData<Response<TvShowResponse>> = _onPopularTvShowsResponse
 
+    private val _onTopRatedTvShowsResponse = MutableLiveData<Response<TvShowResponse>>()
+    val onTopRatedTvShowsResponse: LiveData<Response<TvShowResponse>> = _onTopRatedTvShowsResponse
+
+
+    private val _onNowPlayingTvShowsResponse = MutableLiveData<Response<TvShowResponse>>()
+    val onNowPlayingTvShowsResponse: LiveData<Response<TvShowResponse>> = _onNowPlayingTvShowsResponse
+
     private val _onTvShowDetailsResponse = MutableLiveData<Response<TvShow>>()
     val onTvShowDetailsResponse: LiveData<Response<TvShow>> = _onTvShowDetailsResponse
 
 
-    fun getPopularMovies() {
+    fun getPopularTvShows() {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getTvShowsByCategory("popular")
             _onPopularTvShowsResponse.postValue(response)
+        }
+    }
+
+    fun getTopRatedTvShows() {
+        viewModelScope.launch {
+            // Coroutine that will be canceled when the ViewModel is cleared.
+            val response = repository.getTvShowsByCategory("top_rated")
+            _onTopRatedTvShowsResponse.postValue(response)
+        }
+    }
+
+    fun getNowPlayingTvShows() {
+        viewModelScope.launch {
+            // Coroutine that will be canceled when the ViewModel is cleared.
+            val response = repository.getTvShowsByCategory("now_playing")
+            _onNowPlayingTvShowsResponse.postValue(response)
         }
     }
 
