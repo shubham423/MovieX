@@ -48,7 +48,7 @@ class TvShowsFragment : Fragment(),TvShowsAdapterCallback {
 
     private fun initClickListeners() {
         binding.homeSearchButton.setOnClickListener {
-            findNavController().navigate(R.id.action_moviesFragment_to_searchFragment)
+            findNavController().navigate(R.id.action_tvShowsFragment_to_searchFragment)
         }
     }
 

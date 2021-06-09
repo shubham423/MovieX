@@ -45,5 +45,9 @@
         android:id="@+id/tvShowsFragment"
         android:name="com.shubham.moviesdb.ui.fragments.TvShowsFragment"
         android:label="fragment_tv_shows"
-        tools:layout="@layout/fragment_tv_shows" />
+        tools:layout="@layout/fragment_tv_shows" >
+        <action
+            android:id="@+id/action_tvShowsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 </navigation>

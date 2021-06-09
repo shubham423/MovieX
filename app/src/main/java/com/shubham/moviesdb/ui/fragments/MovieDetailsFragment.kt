@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -81,8 +82,14 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
 
     private fun setSimilarRv(results: List<SimilarMovie?>?) {
         similarMoviesAdapter = SimilarMoviesAdapter(this)
-        similarMoviesAdapter.setData(results as List<SimilarMovie>)
-        binding.similarRv.adapter = similarMoviesAdapter
+        if (!results.isNullOrEmpty()){
+            similarMoviesAdapter.setData(results as List<SimilarMovie>)
+            binding.similarRv.adapter = similarMoviesAdapter
+        }
+        else{
+            Toast.makeText(requireContext(), "No similar movies found", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun setCastRv(cast: List<Cast?>?) {
