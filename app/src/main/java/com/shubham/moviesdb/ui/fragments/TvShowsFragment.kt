@@ -55,6 +55,10 @@ class TvShowsFragment : Fragment(),TvShowsAdapterCallback {
     private fun initObservers() {
 
         viewModel.onPopularTvShowsResponse.observe(viewLifecycleOwner,{
+            binding.popularShimmerContainer.visibility=View.GONE
+            binding.topRatedShimmerContainer.visibility=View.GONE
+            binding.popularShimmerContainer.visibility=View.GONE
+
             Log.d("ferwerew", "$it")
             popularAdapter= it.body()?.let { it1 ->TvShowsAdapter(it1.results as List<TvShow>, this) }!!
             binding.rvPopular.adapter=popularAdapter
