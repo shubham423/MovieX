@@ -59,6 +59,12 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.11.0"
 
 
+    // Room Components
+    implementation('androidx.room:room-runtime:2.2.6')
+    implementation('androidx.room:room-ktx:2.2.6')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt('androidx.room:room-compiler:2.2.6')
+
     // Coil-kt
     implementation('io.coil-kt:coil:1.0.0')
 

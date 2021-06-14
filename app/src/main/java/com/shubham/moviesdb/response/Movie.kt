@@ -1,9 +1,15 @@
 package com.shubham.moviesdb.response
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "favorite_movie")
 data class Movie(
+    @PrimaryKey
+    @SerializedName("id")
+    val id: Int?,
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")
@@ -16,8 +22,6 @@ data class Movie(
     val genres: List<Genre?>?,
     @SerializedName("homepage")
     val homepage: String?,
-    @SerializedName("id")
-    val id: Int?,
     @SerializedName("imdb_id")
     val imdbId: String?,
     @SerializedName("original_language")
