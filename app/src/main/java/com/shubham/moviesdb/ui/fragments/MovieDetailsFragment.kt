@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -59,6 +60,7 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         val id = requireArguments().getInt(Constants.MOVIE_ID_KEY, 0)
         Log.d("MoviesDetails", "id is $id")
 
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         viewModel.getMovieById(id)
         viewModel.getCastCredits(id)
         viewModel.getSimilarMovies(id)

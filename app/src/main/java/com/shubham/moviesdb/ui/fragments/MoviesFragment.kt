@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.utils.Constants
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() , MoviesAdapterCallback {
@@ -44,7 +46,7 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
         viewModel.getNowPlayingMovies()
         initObservers()
         initClickListeners()
-
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 
     private fun initClickListeners() {
@@ -55,25 +57,25 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
 
     private fun initObservers() {
 
-        viewModel.onPopularMoviesResponse.observe(viewLifecycleOwner,{
-            binding.popularShimmerContainer.visibility=View.GONE
+        viewModel.onPopularMoviesResponse.observe(viewLifecycleOwner, {
+            binding.popularShimmerContainer.visibility = View.GONE
             Log.d("ferwerew", "$it")
-            popularAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
-            binding.rvPopular.adapter=popularAdapter
+            popularAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
+            binding.rvPopular.adapter = popularAdapter
         })
 
-        viewModel.onTopRatedMoviesResponse.observe(viewLifecycleOwner,{
-            binding.topRatedShimmerContainer.visibility=View.GONE
+        viewModel.onTopRatedMoviesResponse.observe(viewLifecycleOwner, {
+            binding.topRatedShimmerContainer.visibility = View.GONE
             Log.d("ferwerew###", "$it")
-            topRatedAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
-            binding.rvTopRated.adapter=topRatedAdapter
+            topRatedAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
+            binding.rvTopRated.adapter = topRatedAdapter
         })
 
-        viewModel.onNowPlayingMoviesResponse.observe(viewLifecycleOwner,{
-            binding.nowPlayingShimmerContainer.visibility=View.GONE
+        viewModel.onNowPlayingMoviesResponse.observe(viewLifecycleOwner, {
+            binding.nowPlayingShimmerContainer.visibility = View.GONE
             Log.d("ferwerasaSassew", "$it")
-            nowPlayingAdapter= it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
-            binding.rvNowPlaying.adapter=nowPlayingAdapter
+            nowPlayingAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
+            binding.rvNowPlaying.adapter = nowPlayingAdapter
         })
 
     }
