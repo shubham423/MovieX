@@ -4,9 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,12 +14,14 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.CastAdapter
 import com.shubham.moviesdb.adapters.CastAdapterCallback
 import com.shubham.moviesdb.adapters.SimilarAdapterCallback
 import com.shubham.moviesdb.adapters.SimilarMoviesAdapter
 import com.shubham.moviesdb.databinding.FragmentMovieDetailsBinding
+import com.shubham.moviesdb.local.database.MovieEntity
 import com.shubham.moviesdb.response.Cast
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.response.SimilarMovie
@@ -39,6 +39,9 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
     private val viewModel: MoviesViewModel by viewModels()
     private lateinit var castAdapter: CastAdapter
     private lateinit var similarMoviesAdapter: SimilarMoviesAdapter
+
+    private var favorite = false
+    private  var movie: Movie?=null
 
 
     override fun onCreateView(
@@ -60,10 +63,38 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         viewModel.getCastCredits(id)
         viewModel.getSimilarMovies(id)
         initObservers()
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.details_menu, menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        if (favorite) {
+            menu.findItem(R.id.favorite).setIcon(R.drawable.ic_bookmark_filled)
+        } else {
+            menu.findItem(R.id.favorite).setIcon(R.drawable.ic_bookmark_unfilled)
+        }
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.favorite) {
+            if (favorite) {
+                deleteFavorite(item)
+            } else {
+                addFavorite(item)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private fun initObservers() {
         viewModel.onMoviesDetailsResponse.observe(viewLifecycleOwner, { movie ->
+            this.movie= movie.body()!!
             setMovieDetails(movie)
             showTrailers(
                 movie.body()?.videos
@@ -169,5 +200,22 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         findNavController().navigate(R.id.action_movieDetailsFragment_to_actorDetailsFragment, bundle)
     }
 
+
+    private fun deleteFavorite(item: MenuItem) {
+        val movieEntity=MovieEntity(movie?.id!!,movie?.title!!,movie?.overview!!,movie?.posterPath!!,
+            movie!!.releaseDate!!,0f)
+        viewModel.deleteFavMovie(movieEntity)
+        favorite = false
+        item.setIcon(R.drawable.ic_bookmark_unfilled)
+
+    }
+
+    private fun addFavorite(item: MenuItem) {
+        val movieEntity=MovieEntity(movie?.id!!,movie?.title!!,movie?.overview!!,movie?.posterPath!!,
+            movie!!.releaseDate!!,0f)
+        viewModel.addFavoriteMovie(movieEntity)
+        favorite = true
+        item.setIcon(R.drawable.ic_bookmark_filled)
+    }
 
 }

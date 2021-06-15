@@ -12,4 +12,5 @@
     <string name="birthday">Birthday</string>
     <string name="movies">Movies</string>
     <string name="tvshows">Tv Shows</string>
+    <string name="favorite">Favorite</string>
 </resources>

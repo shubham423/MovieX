@@ -1,11 +1,8 @@
 package com.shubham.moviesdb.response
 
-
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "favorite_movie")
 data class Movie(
     @PrimaryKey
     @SerializedName("id")

@@ -6,7 +6,7 @@ import com.shubham.moviesdb.response.Movie
 
 
 @Database(
-    entities = [Movie::class],
+    entities = [MovieEntity::class],
     version = 1,
     exportSchema = false
 )

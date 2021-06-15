@@ -1,10 +1,13 @@
 package com.shubham.moviesdb.remote
 
+import com.shubham.moviesdb.local.database.MovieDao
+import com.shubham.moviesdb.local.database.MovieEntity
 import com.shubham.moviesdb.response.*
 import retrofit2.Response
 import javax.inject.Inject
 
-class MoviesRepository @Inject constructor(private val api: MoviesApi) {
+class MoviesRepository @Inject constructor(private val api: MoviesApi,private val movieDao: MovieDao) {
+
 
     suspend fun getMoviesByCategory(category: String): Response<MovieResponse>{
         return api.getMovieResponse(category)
@@ -28,4 +31,8 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi) {
     suspend fun searchMovie(query: String): Response<MovieResponse>{
         return api.searchMovies(query)
     }
+
+    suspend fun addFavoriteMovie(movie: MovieEntity) = movieDao.insert(movie)
+
+    suspend fun removeFavoriteMovie(movie: MovieEntity) = movieDao.delete(movie)
 }

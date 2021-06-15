@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shubham.moviesdb.local.database.MovieEntity
 import com.shubham.moviesdb.remote.MoviesRepository
 import com.shubham.moviesdb.response.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
@@ -102,5 +104,13 @@ class MoviesViewModel @Inject constructor(
             val response = repository.searchMovie(query)
             _onSearchMoviesResponse.postValue(response)
         }
+    }
+
+    fun addFavoriteMovie(movie: MovieEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.addFavoriteMovie(movie)
+    }
+
+    fun deleteFavMovie(movie: MovieEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.removeFavoriteMovie(movie)
     }
 }
