@@ -1,8 +1,10 @@
 package com.shubham.moviesdb.remote
 
+import androidx.lifecycle.LiveData
 import com.shubham.moviesdb.local.database.MovieDao
 import com.shubham.moviesdb.local.database.MovieEntity
 import com.shubham.moviesdb.response.*
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -35,4 +37,9 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi,private va
     suspend fun addFavoriteMovie(movie: MovieEntity) = movieDao.insert(movie)
 
     suspend fun removeFavoriteMovie(movie: MovieEntity) = movieDao.delete(movie)
+    suspend fun isFavoriteMovie(movieId: Int): Boolean=movieDao.isMovieExists(movieId)
+    
+    fun getFavoriteMovies(): LiveData<List<MovieEntity>> {
+        return movieDao.getFavoriteMovies()
+    }
 }

@@ -1,9 +1,7 @@
 package com.shubham.moviesdb.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.shubham.moviesdb.local.database.MovieEntity
 import com.shubham.moviesdb.remote.MoviesRepository
 import com.shubham.moviesdb.response.*
@@ -35,13 +33,17 @@ class MoviesViewModel @Inject constructor(
     val onCastCreditsResponse: LiveData<Response<CastCreditsResponse>> = _onCastCreditsResponse
 
     private val _onSimilarMoviesResponse = MutableLiveData<Response<SimiliarMoviesResponse>>()
-    val onSimilarMoviesResponse: LiveData<Response<SimiliarMoviesResponse>> = _onSimilarMoviesResponse
+    val onSimilarMoviesResponse: LiveData<Response<SimiliarMoviesResponse>> =
+        _onSimilarMoviesResponse
 
     private val _onCastDetailsResponse = MutableLiveData<Response<ActorResponse>>()
     val onCastDetailsResponse: LiveData<Response<ActorResponse>> = _onCastDetailsResponse
 
     private val _onSearchMoviesResponse = MutableLiveData<Response<MovieResponse>>()
     val onSearchMoviesResponse: LiveData<Response<MovieResponse>> = _onSearchMoviesResponse
+
+    private val _onAllMoviesResponse = MutableLiveData<LiveData<List<MovieEntity>>>()
+    val onAllMoviesResponse: LiveData<LiveData<List<MovieEntity>>> = _onAllMoviesResponse
 
     fun getPopularMovies() {
         viewModelScope.launch {
@@ -67,7 +69,7 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun getMovieById(id : Int) {
+    fun getMovieById(id: Int) {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesById(id)
@@ -75,7 +77,7 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun getCastCredits(id : Int) {
+    fun getCastCredits(id: Int) {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesCredits(id)
@@ -83,14 +85,15 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun getSimilarMovies(id : Int) {
+    fun getSimilarMovies(id: Int) {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getSimilarMovies(id)
             _onSimilarMoviesResponse.postValue(response)
         }
     }
-    fun getActorDetails(castId : Int) {
+
+    fun getActorDetails(castId: Int) {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getActor(castId)
@@ -113,4 +116,15 @@ class MoviesViewModel @Inject constructor(
     fun deleteFavMovie(movie: MovieEntity) = viewModelScope.launch(Dispatchers.IO) {
         repository.removeFavoriteMovie(movie)
     }
+
+    fun getAllMovies() {
+        viewModelScope.launch {
+            val response=repository.getFavoriteMovies()
+            Log.d("inside live data","${response.value}")
+            _onAllMoviesResponse.postValue(response)
+        }
+    }
+
+
+
 }

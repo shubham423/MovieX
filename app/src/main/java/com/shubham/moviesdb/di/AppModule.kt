@@ -39,7 +39,7 @@ object AppModule {
         Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "movie_catalogue_db"
+            "movie_db"
         ).fallbackToDestructiveMigration()
             .build()
 

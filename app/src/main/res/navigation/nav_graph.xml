@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_moviesFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_moviesFragment_to_bookMarksFragment"
+            app:destination="@id/bookMarksFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -50,4 +53,9 @@
             android:id="@+id/action_tvShowsFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/bookMarksFragment"
+        android:name="com.shubham.moviesdb.ui.fragments.BookMarksFragment"
+        android:label="fragment_book_marks"
+        tools:layout="@layout/fragment_book_marks" />
 </navigation>

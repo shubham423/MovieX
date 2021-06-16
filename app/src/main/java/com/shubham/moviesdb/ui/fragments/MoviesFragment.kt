@@ -53,6 +53,10 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
         binding.homeSearchButton.setOnClickListener {
             findNavController().navigate(R.id.action_moviesFragment_to_searchFragment)
         }
+
+        binding.bookmarks.setOnClickListener {
+            findNavController().navigate(R.id.action_moviesFragment_to_bookMarksFragment)
+        }
     }
 
     private fun initObservers() {
