@@ -41,6 +41,7 @@ class ActorDetailsFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.onCastDetailsResponse.observe(viewLifecycleOwner){
+            Log.d("Actor details","${it.body()?.biography} and ${it.body()?.birthday}")
             binding.textActorName.text = it.body()?.name
             binding.actorImage.load("https://image.tmdb.org/t/p/original" + it.body()?.profilePath)
 
