@@ -42,8 +42,8 @@ class MoviesViewModel @Inject constructor(
     private val _onSearchMoviesResponse = MutableLiveData<Response<MovieResponse>>()
     val onSearchMoviesResponse: LiveData<Response<MovieResponse>> = _onSearchMoviesResponse
 
-    private val _onAllMoviesResponse = MutableLiveData<LiveData<List<MovieEntity>>>()
-    val onAllMoviesResponse: LiveData<LiveData<List<MovieEntity>>> = _onAllMoviesResponse
+    private val _onAllMoviesResponse = MutableLiveData<List<MovieEntity>>()
+    val onAllMoviesResponse: LiveData<List<MovieEntity>> = _onAllMoviesResponse
 
     fun getPopularMovies() {
         viewModelScope.launch {
@@ -120,7 +120,7 @@ class MoviesViewModel @Inject constructor(
     fun getAllMovies() {
         viewModelScope.launch {
             val response=repository.getFavoriteMovies()
-            Log.d("inside live data","${response.value}")
+            Log.d("inside live data","${response[0]}")
             _onAllMoviesResponse.postValue(response)
         }
     }

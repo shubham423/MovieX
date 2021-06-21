@@ -7,8 +7,11 @@ import com.shubham.moviesdb.response.Movie
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM favorite_movie ORDER BY id DESC")
-    fun getFavoriteMovies(): LiveData<List<MovieEntity>>
+//    @Query("SELECT * FROM favorite_movie ORDER BY id DESC")
+//    fun getFavoriteMovies(): LiveData<List<MovieEntity>>
+
+    @Query("SELECT * FROM favorite_movie ORDER BY id ASC")
+    suspend fun getFavoriteMovies(): List<MovieEntity>
 
     @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE id=:id)")
     suspend fun isMovieExists(id: Int): Boolean

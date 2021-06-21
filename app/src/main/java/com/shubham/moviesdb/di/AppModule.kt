@@ -40,8 +40,7 @@ object AppModule {
             context,
             AppDatabase::class.java,
             "movie_db"
-        ).fallbackToDestructiveMigration()
-            .build()
+        ).build()
 
     @Singleton
     @Provides

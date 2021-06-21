@@ -33,9 +33,9 @@ class BookMarksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getAllMovies()
         viewModel.onAllMoviesResponse.observe(viewLifecycleOwner){
-            Log.d("Bookmark","${it.value}")
+            Log.d("Bookmark","$it")
             bookmarkMovieAdapter= BookmarkMovieAdapter()
-            it.value?.let { it1 -> bookmarkMovieAdapter.setData(it1) }
+            bookmarkMovieAdapter.setData(it)
             binding.bookmarkRv.adapter=bookmarkMovieAdapter
         }
     }
