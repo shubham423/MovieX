@@ -42,4 +42,9 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi ,private v
         Log.d("Bookmark repo","${movieDao.getFavoriteMovies()}")
         return movieDao.getFavoriteMovies()
     }
+
+    suspend fun isMovieExist(id: Int): Boolean {
+        Log.d("Bookmark repo isexist","${movieDao.isMovieExists(id)}")
+        return movieDao.isMovieExists(id)
+    }
 }

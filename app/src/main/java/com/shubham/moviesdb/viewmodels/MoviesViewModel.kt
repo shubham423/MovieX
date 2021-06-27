@@ -45,6 +45,9 @@ class MoviesViewModel @Inject constructor(
     private val _onAllMoviesResponse = MutableLiveData<List<MovieEntity>>()
     val onAllMoviesResponse: LiveData<List<MovieEntity>> = _onAllMoviesResponse
 
+    private val _onIsMovieExist = MutableLiveData<Boolean>()
+    val onIsMovieExist: LiveData<Boolean> = _onIsMovieExist
+
     fun getPopularMovies() {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
@@ -122,6 +125,13 @@ class MoviesViewModel @Inject constructor(
             val response=repository.getFavoriteMovies()
             Log.d("inside live data","${response[0]}")
             _onAllMoviesResponse.postValue(response)
+        }
+    }
+
+    fun isMovieExist(id : Int) {
+        viewModelScope.launch {
+            val response=repository.isMovieExist(id)
+            _onIsMovieExist.postValue(response)
         }
     }
 

@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.snackbar.Snackbar
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.CastAdapter
 import com.shubham.moviesdb.adapters.CastAdapterCallback
@@ -58,6 +57,7 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         super.onViewCreated(view, savedInstanceState)
 
         val id = requireArguments().getInt(Constants.MOVIE_ID_KEY, 0)
+        viewModel.isMovieExist(id)
         Log.d("MoviesDetails", "id is $id")
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
@@ -74,6 +74,7 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
+        Log.d("details @@", "initObservers: $favorite ")
         if (favorite) {
             menu.findItem(R.id.favorite).setIcon(R.drawable.ic_bookmark_filled)
         } else {
@@ -88,6 +89,7 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
                 deleteFavorite(item)
             } else {
                 addFavorite(item)
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -101,15 +103,22 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
             showTrailers(
                 movie.body()?.videos
             )
-
-            viewModel.onCastCreditsResponse.observe(viewLifecycleOwner) {
-                setCastRv(it.body()?.cast)
-            }
-
-            viewModel.onSimilarMoviesResponse.observe(viewLifecycleOwner) {
-                setSimilarRv(it.body()?.results)
-            }
         })
+
+        viewModel.onCastCreditsResponse.observe(viewLifecycleOwner) {
+            setCastRv(it.body()?.cast)
+        }
+
+        viewModel.onSimilarMoviesResponse.observe(viewLifecycleOwner) {
+            setSimilarRv(it.body()?.results)
+        }
+
+        viewModel.onIsMovieExist.observe(viewLifecycleOwner){
+            Log.d("details @@@@@", "initObservers: $it ")
+            if(it){
+                favorite=true
+            }
+        }
 
     }
 
@@ -218,6 +227,10 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         viewModel.addFavoriteMovie(movieEntity)
         favorite = true
         item.setIcon(R.drawable.ic_bookmark_filled)
+    }
+
+    private fun checkIfAlreadyFavorite(){
+
     }
 
 }
