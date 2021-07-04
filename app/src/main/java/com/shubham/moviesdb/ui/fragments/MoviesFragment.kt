@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.MoviesAdapter
 import com.shubham.moviesdb.adapters.MoviesAdapterCallback
@@ -17,6 +19,7 @@ import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.utils.Constants
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.abs
 
 
 @AndroidEntryPoint
@@ -47,6 +50,7 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
         initObservers()
         initClickListeners()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+
     }
 
     private fun initClickListeners() {
@@ -66,6 +70,7 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
             Log.d("ferwerew", "$it")
             popularAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvPopular.adapter = popularAdapter
+            setupSlider(it.body()!!.movies)
         })
 
         viewModel.onTopRatedMoviesResponse.observe(viewLifecycleOwner, {
@@ -82,6 +87,16 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
             binding.rvNowPlaying.adapter = nowPlayingAdapter
         })
 
+    }
+
+    private fun setupSlider(movies: List<Movie>) {
+        val imageList = ArrayList<SlideModel>() // Create image list
+        val imageSlider =binding.imageSlider
+        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+        for (i in movies){
+            imageList.add(SlideModel("https://image.tmdb.org/t/p/w780" + (i.backdropPath ?: ""), ""))
+        }
+        imageSlider.setImageList(imageList)
     }
 
     override fun onMovieClicked(movie: Movie) {
