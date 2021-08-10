@@ -16,8 +16,8 @@ android {
         applicationId "com.shubham.moviesdb"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     //image slide show
-    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'

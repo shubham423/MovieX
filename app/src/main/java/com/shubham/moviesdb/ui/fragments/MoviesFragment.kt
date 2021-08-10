@@ -9,17 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.MoviesAdapter
 import com.shubham.moviesdb.adapters.MoviesAdapterCallback
+import com.shubham.moviesdb.adapters.SliderAdapter
 import com.shubham.moviesdb.databinding.FragmentMoviesBinding
 import com.shubham.moviesdb.response.Movie
 import com.shubham.moviesdb.utils.Constants
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
+import com.smarteist.autoimageslider.SliderAnimations
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
 
 
 @AndroidEntryPoint
@@ -90,13 +89,10 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
     }
 
     private fun setupSlider(movies: List<Movie>) {
-        val imageList = ArrayList<SlideModel>() // Create image list
-        val imageSlider =binding.imageSlider
-        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-        for (i in movies){
-            imageList.add(SlideModel("https://image.tmdb.org/t/p/w780" + (i.backdropPath ?: ""), ""))
-        }
-        imageSlider.setImageList(imageList)
+
+            binding.imageSlider.setSliderAdapter(SliderAdapter(movies))
+            binding.imageSlider.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION)
+            binding.imageSlider.setIndicatorVisibility(false)
     }
 
     override fun onMovieClicked(movie: Movie) {
