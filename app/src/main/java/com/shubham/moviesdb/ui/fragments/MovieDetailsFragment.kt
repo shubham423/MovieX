@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -42,6 +43,7 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
 
     private var favorite = false
     private  var movie: Movie?=null
+    private var id: Int?=null
 
 
     override fun onCreateView(
@@ -56,14 +58,14 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = requireArguments().getInt(Constants.MOVIE_ID_KEY, 0)
-        viewModel.isMovieExist(id)
+        id = requireArguments().getInt(Constants.MOVIE_ID_KEY, 0)
+        viewModel.isMovieExist(id!!)
         Log.d("MoviesDetails", "id is $id")
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-        viewModel.getMovieById(id)
-        viewModel.getCastCredits(id)
-        viewModel.getSimilarMovies(id)
+        viewModel.getMovieById(id!!)
+        viewModel.getCastCredits(id!!)
+        viewModel.getSimilarMovies(id!!)
         initObservers()
         setHasOptionsMenu(true)
     }
@@ -113,10 +115,14 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
             setSimilarRv(it.body()?.results)
         }
 
-        viewModel.onIsMovieExist.observe(viewLifecycleOwner){
-            Log.d("details @@@@@", "initObservers: $it ")
-            if(it){
-                favorite=true
+        Log.d("details @@@@@@@@@@", "$id")
+        id?.let {
+            viewModel.onIsMovieExist.observe(viewLifecycleOwner){
+                Log.d("details @@@@@", "initObservers: $it ")
+                if(it){
+                    favorite=true
+                    invalidateOptionsMenu(requireActivity())
+                }
             }
         }
 

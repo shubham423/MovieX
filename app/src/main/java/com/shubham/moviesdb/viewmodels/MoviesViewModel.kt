@@ -128,12 +128,15 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun isMovieExist(id : Int) {
+    fun isMovieExist(id: Int){
         viewModelScope.launch {
             val response=repository.isMovieExist(id)
+            Log.d("M!!!!!!!!!","$response")
             _onIsMovieExist.postValue(response)
         }
     }
+
+
 
 
 
