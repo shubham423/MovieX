@@ -91,7 +91,7 @@ class TvShowsFragment : Fragment(),TvShowsAdapterCallback {
     override fun onMovieClicked(tvShow: TvShow) {
         val bundle = Bundle()
         tvShow.id?.let { bundle.putInt(Constants.MOVIE_ID_KEY, it) }
-        findNavController().navigate(R.id.movieDetailsFragment, bundle)
+        findNavController().navigate(R.id.tvShowDetailsFragment, bundle)
     }
 
 }

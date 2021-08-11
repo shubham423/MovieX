@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.shubham.moviesdb.adapters.BookmarkMovieAdapter
 import com.shubham.moviesdb.databinding.FragmentBookMarksBinding
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
@@ -37,6 +38,9 @@ class BookMarksFragment : Fragment() {
             bookmarkMovieAdapter= BookmarkMovieAdapter()
             bookmarkMovieAdapter.setData(it)
             binding.bookmarkRv.adapter=bookmarkMovieAdapter
+        }
+        binding.backArrow.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

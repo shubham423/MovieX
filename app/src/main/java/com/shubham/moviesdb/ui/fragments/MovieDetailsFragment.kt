@@ -59,9 +59,6 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         super.onViewCreated(view, savedInstanceState)
 
         id = requireArguments().getInt(Constants.MOVIE_ID_KEY, 0)
-        viewModel.isMovieExist(id!!)
-        Log.d("MoviesDetails", "id is $id")
-
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         viewModel.getMovieById(id!!)
         viewModel.getCastCredits(id!!)
@@ -233,10 +230,6 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         viewModel.addFavoriteMovie(movieEntity)
         favorite = true
         item.setIcon(R.drawable.ic_bookmark_filled)
-    }
-
-    private fun checkIfAlreadyFavorite(){
-
     }
 
 }

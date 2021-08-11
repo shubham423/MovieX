@@ -9,7 +9,7 @@
         android:id="@+id/moviesFragment"
         android:name="com.shubham.moviesdb.ui.fragments.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" >
+        tools:layout="@layout/fragment_movies">
         <action
             android:id="@+id/action_moviesFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.shubham.moviesdb.ui.fragments.MovieDetailsFragment"
-        android:label="MovieDetailsFragment" >
+        android:label="MovieDetailsFragment">
         <action
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment" />
@@ -39,7 +39,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.shubham.moviesdb.ui.fragments.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="SearchFragment">
         <action
             android:id="@+id/action_searchFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -48,7 +48,7 @@
         android:id="@+id/tvShowsFragment"
         android:name="com.shubham.moviesdb.ui.fragments.TvShowsFragment"
         android:label="fragment_tv_shows"
-        tools:layout="@layout/fragment_tv_shows" >
+        tools:layout="@layout/fragment_tv_shows">
         <action
             android:id="@+id/action_tvShowsFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -58,4 +58,12 @@
         android:name="com.shubham.moviesdb.ui.fragments.BookMarksFragment"
         android:label="fragment_book_marks"
         tools:layout="@layout/fragment_book_marks" />
+    <fragment
+        android:id="@+id/tvShowDetailsFragment"
+        android:name="com.shubham.moviesdb.ui.fragments.TvShowDetailsFragment"
+        android:label="fragment_tv_show_details"
+        tools:layout="@layout/fragment_tv_show_details" />
+    <action
+        android:id="@+id/action_global_tvShowDetailsFragment"
+        app:destination="@id/tvShowDetailsFragment" />
 </navigation>

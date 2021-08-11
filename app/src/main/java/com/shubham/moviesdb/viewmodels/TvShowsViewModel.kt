@@ -57,7 +57,7 @@ class TvShowsViewModel @Inject constructor(
     }
 
 
-    fun getMovieById(id : Int) {
+    fun getShowById(id : Int) {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getTvShowDetail(id)

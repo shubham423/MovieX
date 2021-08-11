@@ -39,7 +39,6 @@ class TvShowsAdapter (private val tvShowsList: List<TvShow>, private val callbac
                 callback.onMovieClicked(tvShow)
             }
         }
-
     }
 }
 
