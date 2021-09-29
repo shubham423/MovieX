@@ -2,8 +2,6 @@
 
 # **MovieX** 
 
-**Blogster** is an an android client of https://demo.realworld.io
-
 ## 📸 Screenshots
 
 ||||
