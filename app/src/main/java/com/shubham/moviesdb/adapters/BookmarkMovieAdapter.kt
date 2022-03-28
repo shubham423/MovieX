@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.shubham.moviesdb.databinding.ItemMovieSearchBinding
 import com.shubham.moviesdb.local.database.MovieEntity
 
-class BookmarkMovieAdapter (): RecyclerView.Adapter<BookmarkMovieAdapter.MovieViewHolder>() {
+class BookmarkMovieAdapter : RecyclerView.Adapter<BookmarkMovieAdapter.MovieViewHolder>() {
 
 
      private var moviesList: List<MovieEntity>?=null

@@ -15,23 +15,23 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi ,private v
         return api.getMovieResponse(category)
     }
     suspend fun getMoviesById(id: Int): Response<Movie>{
-        return api.getMovieDetails(id)
+        return SafeApiRequest.apiRequest { api.getMovieDetails(id)  }
     }
 
     suspend fun getMoviesCredits(id: Int): Response<CastCreditsResponse>{
-        return api.getMovieCredits(id)
+        return SafeApiRequest.apiRequest { api.getMovieCredits(id) }
     }
 
     suspend fun getSimilarMovies(id: Int): Response<SimiliarMoviesResponse>{
-        return api.getSimilarMovies(id)
+        return SafeApiRequest.apiRequest { api.getSimilarMovies(id) }
     }
 
     suspend fun getActor(castId: Int): Response<ActorResponse>{
-        return api.getActor(castId)
+        return SafeApiRequest.apiRequest { api.getActor(castId) }
     }
 
     suspend fun searchMovie(query: String): Response<MovieResponse>{
-        return api.searchMovies(query)
+        return SafeApiRequest.apiRequest { api.searchMovies(query) }
     }
 
     suspend fun addFavoriteMovie(movie: MovieEntity) = movieDao.insert(movie)

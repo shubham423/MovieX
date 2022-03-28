@@ -23,10 +23,10 @@ class CastAdapter(private val callback:CastAdapterCallback) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int {
-        if (castList != null) {
-            return castList!!.size
+        return if (castList != null) {
+            castList!!.size
         } else {
-            return 0
+            0
         }
 
     }

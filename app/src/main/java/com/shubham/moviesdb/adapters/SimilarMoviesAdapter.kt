@@ -23,10 +23,10 @@ class SimilarMoviesAdapter(private val callback: SimilarAdapterCallback): Recycl
     }
 
     override fun getItemCount(): Int {
-        if (moviesList!=null){
-            return moviesList!!.size
+        return if (moviesList!=null){
+            moviesList!!.size
         }else{
-            return 0
+            0
         }
 
     }

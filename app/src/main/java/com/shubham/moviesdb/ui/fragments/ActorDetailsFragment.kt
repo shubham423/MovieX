@@ -2,17 +2,14 @@ package com.shubham.moviesdb.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
-import com.bumptech.glide.Glide
-import com.shubham.moviesdb.R
 import com.shubham.moviesdb.databinding.FragmentActorDetailsBinding
 import com.shubham.moviesdb.utils.Constants
-import com.shubham.moviesdb.utils.Constants.TMDB_IMAGE_BASE_URL
 import com.shubham.moviesdb.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
