@@ -34,7 +34,6 @@ class TvShowsFragment : Fragment(),TvShowsAdapterCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding= FragmentTvShowsBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -60,17 +59,16 @@ class TvShowsFragment : Fragment(),TvShowsAdapterCallback {
 
         viewModel.onPopularTvShowsResponse.observe(viewLifecycleOwner, {
             binding.popularShimmerContainer.visibility = View.GONE
-            binding.topRatedShimmerContainer.visibility = View.GONE
-            binding.popularShimmerContainer.visibility = View.GONE
 
-            Log.d("ferwerew", "$it")
+
             popularAdapter =
                 it.body()?.let { it1 -> TvShowsAdapter(it1.results as List<TvShow>, this) }!!
             binding.rvPopular.adapter = popularAdapter
         })
 
         viewModel.onTopRatedTvShowsResponse.observe(viewLifecycleOwner, {
-            Log.d("ferwerew###", "$it")
+            binding.topRatedShimmerContainer.visibility = View.GONE
+
             topRatedAdapter = it.body()?.let { it1 ->
                 TvShowsAdapter(
                     it1.results as List<TvShow>,
@@ -80,11 +78,11 @@ class TvShowsFragment : Fragment(),TvShowsAdapterCallback {
             binding.rvTopRated.adapter = topRatedAdapter
         })
 
-//        viewModel.onNowPlayingTvShowsResponse.observe(viewLifecycleOwner,{
-//            Log.d("ferwerasaSassew", "$it")
-//            nowPlayingAdapter= it.body()?.let { it1 -> TvShowsAdapter(it1.results as List<TvShow>, this) }!!
-//            binding.rvNowPlaying.adapter=nowPlayingAdapter
-//        })
+        viewModel.onNowPlayingTvShowsResponse.observe(viewLifecycleOwner,{
+            binding.nowPlayingShimmerContainer.visibility = View.GONE
+            nowPlayingAdapter= it.body()?.let { it1 -> TvShowsAdapter(it1.results as List<TvShow>, this) }!!
+            binding.rvNowPlaying.adapter=nowPlayingAdapter
+        })
 
     }
 
