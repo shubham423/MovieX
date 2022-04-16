@@ -42,10 +42,10 @@
             android:id="@+id/movieDetailsReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:alpha="0.7"
-            android:textColor="@color/white"
             android:fontFamily="sans-serif-smallcaps"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@+id/movieDetailsTitle"
             app:layout_constraintTop_toBottomOf="@+id/movieDetailsTitle"
             tools:text="@tools:sample/date/ddmmyy" />
@@ -67,13 +67,12 @@
             android:id="@+id/movieDetailsGenres"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="GENERE"
+            android:layout_marginTop="12dp"
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="@id/movieDetailsTitle"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieDetailsReleaseDate" />
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailsReleaseDate"
+            tools:text="GENERE" />
 
         <TextView
             android:id="@+id/overviewLabel"
@@ -187,6 +186,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/similarLabel"
             tools:listitem="@layout/item_similar" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintStart_toEndOf="@+id/movieDetailsPoster"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetailsGenres" />
+
+        <TextView
+            android:id="@+id/ratings_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

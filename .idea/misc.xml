@@ -11,13 +11,17 @@
         <entry key="..\:/AndroidStudioProjects/MoviesDb/app/src/main/res/layout/fragment_tv_show_details.xml" value="0.3651041666666667" />
         <entry key="..\:/AndroidStudioProjects/MoviesDb/app/src/main/res/layout/fragment_tv_shows.xml" value="0.3651041666666667" />
         <entry key="..\:/AndroidStudioProjects/MoviesDb/app/src/main/res/layout/image_slider_item.xml" value="0.3651041666666667" />
+        <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/drawable-v24/ic_star.xml" value="0.39479166666666665" />
+        <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/layout/fragment_actor_details.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/layout/fragment_movie_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/layout/fragment_movies.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/layout/fragment_tv_show_details.xml" value="0.20520833333333333" />
+        <entry key="..\:/AndroidStudioProjects/MoviesX/app/src/main/res/layout/item_cast.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="true" project-jdk-name="13" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="13" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

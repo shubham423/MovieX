@@ -3,6 +3,7 @@ package com.shubham.moviesdb.ui.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -192,7 +193,10 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         binding.movieDetailsOverview.text = response?.body()?.overview ?: ""
         binding.movieDetailsDuration.text = response?.body()?.runtime.toString()+" min"
         binding.movieDetailsReleaseDate.text = response?.body()?.releaseDate ?: ""
-        binding.movieDetailsGenres.text= response?.body()?.genres?.get(0)?.name ?:""
+        binding.ratingsText.text = this.movie?.voteAverage.toString()
+        if (response != null) {
+            binding.movieDetailsGenres.text= getGenres(response.body()?.genres as List<Movie.Genre>)
+        }
 
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500" + (response?.body()?.posterPath ?: ""))
@@ -229,6 +233,14 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         viewModel.addFavoriteMovie(movieEntity)
         favorite = true
         item.setIcon(R.drawable.ic_bookmark_filled)
+    }
+
+    fun getGenres(genres: List<Movie.Genre>): String {
+        val currentGenres = mutableListOf<String>()
+        for (genre in genres) {
+            genre.name?.let { currentGenres.add(it) }
+        }
+        return TextUtils.join(", ", currentGenres)
     }
 
 }
