@@ -35,7 +35,6 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding= FragmentMoviesBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -66,7 +65,6 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
 
         viewModel.onPopularMoviesResponse.observe(viewLifecycleOwner, {
             binding.popularShimmerContainer.visibility = View.GONE
-            Log.d("ferwerew", "$it")
             popularAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvPopular.adapter = popularAdapter
             setupSlider(it.body()!!.movies)
@@ -74,14 +72,12 @@ class MoviesFragment : Fragment() , MoviesAdapterCallback {
 
         viewModel.onTopRatedMoviesResponse.observe(viewLifecycleOwner, {
             binding.topRatedShimmerContainer.visibility = View.GONE
-            Log.d("ferwerew###", "$it")
             topRatedAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvTopRated.adapter = topRatedAdapter
         })
 
         viewModel.onNowPlayingMoviesResponse.observe(viewLifecycleOwner, {
             binding.nowPlayingShimmerContainer.visibility = View.GONE
-            Log.d("ferwerasaSassew", "$it")
             nowPlayingAdapter = it.body()?.let { it1 -> MoviesAdapter(it1.movies, this) }!!
             binding.rvNowPlaying.adapter = nowPlayingAdapter
         })

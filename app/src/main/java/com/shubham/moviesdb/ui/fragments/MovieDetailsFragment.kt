@@ -50,7 +50,6 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentMovieDetailsBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -112,10 +111,10 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
             setSimilarRv(it.body()?.results)
         }
 
-        Log.d("details @@@@@@@@@@", "$id")
+        id?.let { viewModel.isMovieExist(it) }
+
         id?.let {
             viewModel.onIsMovieExist.observe(viewLifecycleOwner){
-                Log.d("details @@@@@", "initObservers: $it ")
                 if(it){
                     favorite=true
                     invalidateOptionsMenu(requireActivity())
@@ -191,14 +190,15 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
     private fun setMovieDetails(response: Response<Movie>?) {
         binding.movieDetailsTitle.text = response?.body()?.title ?: ""
         binding.movieDetailsOverview.text = response?.body()?.overview ?: ""
-        binding.movieDetailsDuration.text = response?.body()?.runtime.toString()
+        binding.movieDetailsDuration.text = response?.body()?.runtime.toString()+" min"
         binding.movieDetailsReleaseDate.text = response?.body()?.releaseDate ?: ""
+        binding.movieDetailsGenres.text= response?.body()?.genres?.get(0)?.name ?:""
 
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500" + (response?.body()?.posterPath ?: ""))
             .transition(DrawableTransitionOptions.withCrossFade())
             .centerCrop()
-            .into(binding.movieDetailsPoster)
+            .into(binding.movieDetailsPoster )
     }
 
     override fun onMovieClicked(movieId: Int) {
@@ -208,7 +208,6 @@ class MovieDetailsFragment : Fragment(), SimilarAdapterCallback,CastAdapterCallb
     }
 
     override fun onCastClicked(castId: Int) {
-        Log.d("Movuedetails", "cast id is $id")
         val bundle = Bundle()
         bundle.putInt(CAST_ID_KEY,castId)
         findNavController().navigate(R.id.action_movieDetailsFragment_to_actorDetailsFragment, bundle)

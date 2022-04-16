@@ -44,7 +44,7 @@ class ActorDetailsFragment : Fragment() {
 
             binding.textBio.text = it.body()?.biography
 
-            binding.textPopularity.text = it.body()?.popularity.toString()
+            binding.textPopularity.text = "Popularity  : "+it.body()?.popularity.toString()
             binding.textCharacter.text = it.body()?.knownForDepartment
             binding.textBirthday.text = it.body()?.birthday
         }

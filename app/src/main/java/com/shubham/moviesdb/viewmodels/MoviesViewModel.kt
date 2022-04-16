@@ -50,7 +50,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getPopularMovies() {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesByCategory("popular")
             _onPopularMoviesResponse.postValue(response)
         }
@@ -58,7 +57,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getTopRatedMovies() {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesByCategory("top_rated")
             _onTopRatedMoviesResponse.postValue(response)
         }
@@ -66,7 +64,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getNowPlayingMovies() {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesByCategory("now_playing")
             _onNowPlayingMoviesResponse.postValue(response)
         }
@@ -74,7 +71,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getMovieById(id: Int) {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesById(id)
             _onMoviesDetailsResponse.postValue(response)
         }
@@ -82,7 +78,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getCastCredits(id: Int) {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getMoviesCredits(id)
             _onCastCreditsResponse.postValue(response)
         }
@@ -90,7 +85,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getSimilarMovies(id: Int) {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getSimilarMovies(id)
             _onSimilarMoviesResponse.postValue(response)
         }
@@ -98,7 +92,6 @@ class MoviesViewModel @Inject constructor(
 
     fun getActorDetails(castId: Int) {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.getActor(castId)
             _onCastDetailsResponse.postValue(response)
         }
@@ -106,7 +99,6 @@ class MoviesViewModel @Inject constructor(
 
     fun searchMovie(query: String) {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             val response = repository.searchMovie(query)
             _onSearchMoviesResponse.postValue(response)
         }
@@ -123,7 +115,6 @@ class MoviesViewModel @Inject constructor(
     fun getAllMovies() {
         viewModelScope.launch {
             val response=repository.getFavoriteMovies()
-            Log.d("inside live data","${response[0]}")
             _onAllMoviesResponse.postValue(response)
         }
     }
@@ -131,7 +122,6 @@ class MoviesViewModel @Inject constructor(
     fun isMovieExist(id: Int){
         viewModelScope.launch {
             val response=repository.isMovieExist(id)
-            Log.d("M!!!!!!!!!","$response")
             _onIsMovieExist.postValue(response)
         }
     }
