@@ -64,6 +64,7 @@ class TvShowDetailsFragment : Fragment(),CastAdapterCallback {
             this.show= show.body()!!
             setShowDetails(show)
             setCastList(show.body()!!.credits?.cast)
+            showTrailers(show.body()!!.videos)
         })
     }
 
