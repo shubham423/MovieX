@@ -12,6 +12,4 @@ data class TvShowResponse(
     val totalPages: Int?,
     @SerializedName("total_results")
     val totalResults: Int?
-) {
-
-}
+)

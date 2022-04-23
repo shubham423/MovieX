@@ -15,6 +15,8 @@ data class TvShow(
     val name: String?,
     @SerializedName("origin_country")
     val originCountry: List<String?>?,
+    @SerializedName("credits")
+    val credits: CreditsResponse?,
     @SerializedName("original_language")
     val originalLanguage: String?,
     @SerializedName("original_name")

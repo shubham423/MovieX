@@ -31,6 +31,8 @@ class TvShowsViewModel @Inject constructor(
     private val _onTvShowDetailsResponse = MutableLiveData<Response<TvShow>>()
     val onTvShowDetailsResponse: LiveData<Response<TvShow>> = _onTvShowDetailsResponse
 
+    private val _onCastCreditsResponse = MutableLiveData<Response<CastCreditsResponse>>()
+    val onCastCreditsResponse: LiveData<Response<CastCreditsResponse>> = _onCastCreditsResponse
 
     fun getPopularTvShows() {
         viewModelScope.launch {
@@ -60,5 +62,4 @@ class TvShowsViewModel @Inject constructor(
             _onTvShowDetailsResponse.postValue(response)
         }
     }
-
 }

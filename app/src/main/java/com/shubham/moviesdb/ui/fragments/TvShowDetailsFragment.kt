@@ -18,7 +18,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.shubham.moviesdb.R
 import com.shubham.moviesdb.adapters.CastAdapter
+import com.shubham.moviesdb.adapters.CastAdapterCallback
 import com.shubham.moviesdb.databinding.FragmentTvShowDetailsBinding
+import com.shubham.moviesdb.response.Cast
+import com.shubham.moviesdb.response.CreditsResponse
 import com.shubham.moviesdb.response.TvShow
 import com.shubham.moviesdb.response.VideosResponse
 import com.shubham.moviesdb.utils.Constants
@@ -27,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Response
 
 @AndroidEntryPoint
-class TvShowDetailsFragment : Fragment() {
+class TvShowDetailsFragment : Fragment(),CastAdapterCallback {
 
     private lateinit var binding: FragmentTvShowDetailsBinding
 
@@ -60,12 +63,16 @@ class TvShowDetailsFragment : Fragment() {
         viewModel.onTvShowDetailsResponse.observe(viewLifecycleOwner, { show ->
             this.show= show.body()!!
             setShowDetails(show)
+            setCastList(show.body()!!.credits?.cast)
         })
-//
-//        viewModel.onCastCreditsResponse.observe(viewLifecycleOwner) {
-//            setCastRv(it.body()?.cast)
-//        }
+    }
 
+    private fun setCastList(cast: List<Cast>?) {
+        castAdapter= CastAdapter(this)
+        if (cast != null) {
+            castAdapter.setData(cast)
+        }
+        binding.castRv.adapter=castAdapter
     }
 
     private fun setShowDetails(show: Response<TvShow>?) {
@@ -119,6 +126,10 @@ class TvShowDetailsFragment : Fragment() {
             binding.trailersLabel.visibility = View.GONE
             binding.movieTrailers.visibility = View.GONE
         }
+    }
+
+    override fun onCastClicked(castId: Int) {
+        TODO("Not yet implemented")
     }
 
 }
